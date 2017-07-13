@@ -1,0 +1,16 @@
+{
+  "name": "whq-google-map",
+  "version": "0.1.0",
+  "description": "Wrapper for embedding a Google Map more easily.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://worldhqinc@github.com/worldhqinc/whq-google-map.git"
+  },
+  "author": "WHQ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/worldhqinc/whq-google-map/issues"
+  },
+  "homepage": "https://github.com/worldhqinc/whq-google-map#readme"
+}
