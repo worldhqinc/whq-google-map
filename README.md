@@ -24,7 +24,7 @@ const myMap = new GoogleMap({
     styles: contactMapStyles
 })
 
-contactMap.init()
+myMap.init()
 ```
 
 ## Options
