@@ -1,12 +1,14 @@
 class GoogleMap {
     constructor (options) {
-        const { apiKey, element, coords, zoom, markerIcon, styles } = options
+        const { apiKey, element, initialCoords, zoom, title, markerIcon, markers, styles } = options
 
         this.apiKey = apiKey
         this.element = element
-        this.coords = coords
+        this.initialCoords = initialCoords
         this.zoom = zoom || 4
+        this.title = title || null
         this.markerIcon = markerIcon || null
+        this.markers = markers || null
         this.styles = styles || null
         this.map = null
     }
@@ -30,7 +32,7 @@ class GoogleMap {
 
     loadMap () {
         this.map = new window.google.maps.Map(this.element, {
-            center: this.coords,
+            center: this.initialCoords,
             clickableIcons: false,
             mapTypeControl: false,
             streetViewControl: false,
@@ -39,15 +41,22 @@ class GoogleMap {
             zoomControl: false
         })
 
-        this.loadMarker()
+        this.loadMarkers()
     }
 
-    loadMarker () {
+    loadMarkers () {
+        for (let marker of this.markers) {
+            this.addMarker(marker.coords, marker.title || null)
+        }
+    }
+
+    addMarker (coords, title = '', icon = this.markerIcon) {
         /* eslint-disable no-new */
         new window.google.maps.Marker({
-            position: this.coords,
+            position: coords,
             map: this.map,
-            icon: this.markerIcon
+            icon: icon,
+            title: title
         })
     }
 }

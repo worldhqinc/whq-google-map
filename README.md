@@ -13,14 +13,26 @@ import GoogleMap from 'whq-google-map'
 // new GoogleMap(options)
 
 const mapCanvas = document.querySelector('.map-canvas')
+const mapMarkers = [
+    {
+        coords: { lat: 100, lng: -100 },
+        title: 'Location #1' <-- Optional
+    },
+    {
+        coords: { lat: 100, lng: -100 },
+        title: 'Location #2' <-- Optional
+    },
+    ...
+]
 const mapStyles = [...]
 
 const myMap = new GoogleMap({
-    apiKey: [YOUR API KEY],
-    coords: { lat: 100, lng: -100 },
+    apiKey: 'YOUR_API_KEY',
     element: mapCanvas,
+    initialCoords: { lat: 100, lng: -100 },
+    zoom: 12,
     markerIcon: 'img/map-marker.png',
-    zoom: 16,
+    markers: mapMarkers,
     styles: mapStyles
 })
 
