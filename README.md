@@ -13,7 +13,7 @@ import GoogleMap from 'whq-google-map'
 // new GoogleMap(options)
 
 const mapCanvas = document.querySelector('.map-canvas')
-const contactMapStyles = [...]
+const mapStyles = [...]
 
 const myMap = new GoogleMap({
     apiKey: [YOUR API KEY],
@@ -21,7 +21,7 @@ const myMap = new GoogleMap({
     element: mapCanvas,
     markerIcon: 'img/map-marker.png',
     zoom: 16,
-    styles: contactMapStyles
+    styles: mapStyles
 })
 
 myMap.init()
