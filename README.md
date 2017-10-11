@@ -77,3 +77,18 @@ To get bound elements to work, you must add the `data-title` attribute to the DO
 ```html
 <li class="bound-element" data-title="Location #1">Location #1</li>
 ```
+
+## Icon Override
+
+Override the global icon option by adding the `data-icon` attribute to the markers data.
+
+```html
+const mapMarkers = [
+    {
+        coords: { lat: 100, lng: -100 },
+        title: 'Location #1',
+        icon: '/path/to/custom-icon.png'
+    },
+    ...
+]
+```
