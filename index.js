@@ -14,6 +14,7 @@ class GoogleMap {
             zoom: markerClick.zoom || 7,
             centerOnMarker: markerClick.centerOnMarker || true,
             bindSelector: markerClick.bindSelector || null,
+            boundElementContainer: markerClick.boundElementContainer || null,
             activeClass: markerClick.activeClass || 'active'
         }
         this.styles = styles || null
@@ -41,6 +42,7 @@ class GoogleMap {
         this.map = new window.google.maps.Map(this.element, {
             center: this.initialCoords,
             clickableIcons: false,
+            gestureHandling: 'greedy',
             mapTypeControl: false,
             streetViewControl: false,
             styles: this.styles,
@@ -69,23 +71,49 @@ class GoogleMap {
         if (this.markerClick.enabled) {
             this.addMarkerClickEvent(marker)
         }
+
+        if (this.markerClick.bindSelector) {
+            this.addBoundElementsClickEvent(marker)
+        }
     }
 
     addMarkerClickEvent (marker) {
         marker.addListener('click', () => {
-            this.map.setZoom(this.markerClick.zoom)
+            this.zoomAndCenterOnMarker(marker)
+        })
+    }
 
-            if (this.markerClick.centerOnMarker) {
-                this.map.setCenter(marker.getPosition())
-            }
+    zoomAndCenterOnMarker (marker) {
+        this.map.setZoom(this.markerClick.zoom)
 
-            if (this.markerClick.bindSelector) {
-                const elements = Array.from(document.querySelectorAll(this.markerClick.bindSelector))
-                elements.forEach(element => element.classList.remove(this.markerClick.activeClass))
+        if (this.markerClick.centerOnMarker) {
+            this.map.setCenter(marker.getPosition())
+        }
 
-                const matchingElement = elements.find(element => element.dataset.title === marker.title)
-                matchingElement.classList.add(this.markerClick.activeClass)
-            }
+        if (this.markerClick.bindSelector) {
+            this.activateBoundElement(marker.title)
+        }
+    }
+
+    activateBoundElement (title) {
+        const elements = Array.from(document.querySelectorAll(this.markerClick.bindSelector))
+        elements.forEach(element => element.classList.remove(this.markerClick.activeClass))
+
+        const matchingElement = elements.find(element => element.dataset.title === title)
+        const container = document.querySelector(this.markerClick.boundElementContainer)
+
+        if (matchingElement && container) {
+            matchingElement.classList.add(this.markerClick.activeClass)
+            container.scrollTop = matchingElement.offsetTop
+        }
+    }
+
+    addBoundElementsClickEvent (marker) {
+        const elements = Array.from(document.querySelectorAll(this.markerClick.bindSelector))
+        const matchingElement = elements.find(element => element.dataset.title === marker.title)
+
+        matchingElement.addEventListener('click', () => {
+            this.zoomAndCenterOnMarker(marker)
         })
     }
 }
