@@ -55,7 +55,7 @@ class GoogleMap {
 
     loadMarkers () {
         for (let marker of this.markers) {
-            this.addMarker(marker.coords, marker.title || null)
+            this.addMarker(marker.coords, marker.title || null, marker.icon)
         }
     }
 
