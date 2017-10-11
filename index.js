@@ -1,6 +1,6 @@
 class GoogleMap {
     constructor (options) {
-        const { apiKey, element, initialCoords, zoom, title, markerIcon, markers, styles } = options
+        const { apiKey, element, initialCoords, zoom, title, markerIcon, markers, markerClick, styles } = options
 
         this.apiKey = apiKey
         this.element = element
@@ -9,6 +9,13 @@ class GoogleMap {
         this.title = title || null
         this.markerIcon = markerIcon || null
         this.markers = markers || null
+        this.markerClick = {
+            enabled: markerClick.enabled || false,
+            zoom: markerClick.zoom || 7,
+            centerOnMarker: markerClick.centerOnMarker || true,
+            bindSelector: markerClick.bindSelector || null,
+            activeClass: markerClick.activeClass || 'active'
+        }
         this.styles = styles || null
         this.map = null
     }
@@ -52,11 +59,33 @@ class GoogleMap {
 
     addMarker (coords, title = '', icon = this.markerIcon) {
         /* eslint-disable no-new */
-        new window.google.maps.Marker({
+        const marker = new window.google.maps.Marker({
             position: coords,
             map: this.map,
             icon: icon,
             title: title
+        })
+
+        if (this.markerClick.enabled) {
+            this.addMarkerClickEvent(marker)
+        }
+    }
+
+    addMarkerClickEvent (marker) {
+        marker.addListener('click', () => {
+            this.map.setZoom(this.markerClick.zoom)
+
+            if (this.markerClick.centerOnMarker) {
+                this.map.setCenter(marker.getPosition())
+            }
+
+            if (this.markerClick.bindSelector) {
+                const elements = Array.from(document.querySelectorAll(this.markerClick.bindSelector))
+                elements.forEach(element => element.classList.remove(this.markerClick.activeClass))
+
+                const matchingElement = elements.find(element => element.dataset.title === marker.title)
+                matchingElement.classList.add(this.markerClick.activeClass)
+            }
         })
     }
 }
