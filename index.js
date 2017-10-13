@@ -104,7 +104,6 @@ class GoogleMap {
 
         if (matchingElement && container) {
             matchingElement.classList.add(this.markerClick.activeClass)
-            container.scrollTop = matchingElement.offsetTop
         }
     }
 
