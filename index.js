@@ -111,9 +111,11 @@ class GoogleMap {
         const elements = Array.from(document.querySelectorAll(this.markerClick.bindSelector))
         const matchingElement = elements.find(element => element.dataset.title === marker.title)
 
-        matchingElement.addEventListener('click', () => {
-            this.zoomAndCenterOnMarker(marker)
-        })
+        if (matchingElement) {
+        	matchingElement.addEventListener('click', () => {
+            	this.zoomAndCenterOnMarker(marker)
+        	})
+    	}
     }
 }
 
