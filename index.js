@@ -112,10 +112,10 @@ class GoogleMap {
         const matchingElement = elements.find(element => element.dataset.title === marker.title)
 
         if (matchingElement) {
-        	matchingElement.addEventListener('click', () => {
-            	this.zoomAndCenterOnMarker(marker)
-        	})
-    	}
+            matchingElement.addEventListener('click', () => {
+                this.zoomAndCenterOnMarker(marker)
+            })
+        }
     }
 }
 
