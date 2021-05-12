@@ -1,6 +1,6 @@
 {
   "name": "whq-google-map",
-  "version": "1.2.5",
+  "version": "1.3.0",
   "description": "Wrapper for embedding a Google Map more easily.",
   "main": "index.js",
   "repository": {
