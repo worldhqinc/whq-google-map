@@ -65,7 +65,8 @@ class GoogleMap {
             position: coords,
             map: this.map,
             icon: icon,
-            title: title
+            title: title,
+            optimized: true
         })
 
         if (this.markerClick.enabled) {
